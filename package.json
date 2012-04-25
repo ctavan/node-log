@@ -1,0 +1,21 @@
+{
+  "name": "log",
+  "description": "Log messages to stdout/stderr depending on error levels.",
+  "author": "Christoph Tavan <dev@tavan.de>",
+  "private": true,
+  "contributors": [
+    "Jonas Dohse <jonas@dohse.ch>"
+  ],
+  "version": "0.1.0",
+  "homepage": "https://github.com/ctavan/node-log",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ctavan/node-log.git"
+  },
+  "main": "./log",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
