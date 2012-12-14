@@ -1,10 +1,8 @@
 // Copyright 2011-2012 mbr targeting GmbH. All Rights Reserved.
 
-var os = require('os');
 var util = require('util');
 
 var getenv = require('getenv');
-
 
 var logLevels = ['fatal', 'error', 'warn', 'info', 'debug'];
 
@@ -39,8 +37,8 @@ function forward(target, prefix) {
     var errors = findErrors(args);
 
     console[target]('%s%s',
-        util.format.apply(null, args),
-        formatErrors(errors));
+                    util.format.apply(null, args),
+                    formatErrors(errors));
   };
 }
 
