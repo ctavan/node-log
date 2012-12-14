@@ -20,7 +20,7 @@
     "node": "*"
   },
   "dependencies": {
-    "getenv": "~0.2.0"
+    "getenv": "0.3.0"
   },
   "devDependencies": {
     "sinon": "~1.3.4"
