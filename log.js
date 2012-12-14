@@ -14,7 +14,7 @@ function findErrors(args) {
   });
 }
 
-var logStack = getenv.bool('LOG_STACK');
+var logStack = getenv.bool('LOG_STACK', true);
 function formatErrors(errors) {
   if (!logStack) {
     return '';
@@ -50,7 +50,7 @@ exports.warn = forward('warn', 'WARN : ');
 exports.info = forward('log', 'INFO : ');
 exports.debug = forward('log', 'DEBUG: ');
 
-var logLevel = getenv.string('LOG_LEVEL');
+var logLevel = getenv.string('LOG_LEVEL', 'debug');
 var index = logLevels.indexOf(logLevel);
 if (index === -1) {
   throw new Error('Log.InvalidLogLevel: ' + logLevel + ', set LOG_LEVEL');
