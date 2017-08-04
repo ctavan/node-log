@@ -3,36 +3,24 @@
 const util = require('util');
 
 const getenv = require('getenv');
+const isError = require('lodash.iserror');
+const isString = require('lodash.isstring');
 
 const logLevels = ['fatal', 'error', 'warn', 'info', 'debug'];
 
-function findErrors(args) {
-  return args.filter((arg) => arg instanceof Error);
-}
-
 const logStack = getenv.bool('LOG_STACK', true);
-function formatErrors(errors) {
-  if (!logStack) {
-    return '';
-  }
-
-  const output = [''];
-  errors.forEach((error) => {
-    output.push(error.stack);
-
-    const object = util.inspect(error, true, 3);
-    output.push(object);
-  });
-  return output.join('\n');
-}
-
 function forward(target, prefix) {
-  return (format, ...args) => {
-    const errors = findErrors(args);
+  return (format, ...args_) => {
+    const placeholders =
+      isString(format) ? (format.match(/%[sdifj]/g) || []).length : 0;
+    const args = args_.slice(0, placeholders);
 
-    console[target]('%s%s',
-                    util.format(prefix + format, ...args),
-                    formatErrors(errors));
+    const errors = (logStack ? args_ : [])
+      .filter(isError)
+      .map((error) => util.inspect(error, false, 3));
+
+    console[target]('%s', util.format(prefix + format, ...args) +
+                          ['', ...errors].join('\n'));
   };
 }
 

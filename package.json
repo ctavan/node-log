@@ -20,7 +20,9 @@
     "node": "*"
   },
   "dependencies": {
-    "getenv": "^0.7.0"
+    "getenv": "^0.7.0",
+    "lodash.iserror": "^3.1.1",
+    "lodash.isstring": "^4.0.1"
   },
   "devDependencies": {
     "sinon": "^3.0.0"

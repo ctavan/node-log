@@ -52,8 +52,20 @@ tests['log.XXX() with error stacks'] = function testErrorStacks() {
   assert.ok(message.indexOf('testErrorStacks') !== -1);
   assert.ok(message.indexOf('Error one') !== -1);
   assert.ok(message.indexOf('Error two') !== -1);
+  assert.strictEqual(message.match(/\btestErrorStacks\b/g).length, 2);
 
-  console.error.reset();
+  console.error.restore();
+};
+
+tests['Error should only be rendered once'] = function() {
+  sinon.spy(console, 'error');
+
+  log.error('Message:', new Error('error'));
+  var call = console.error.getCall(0);
+  var message = util.format.apply(null, call.args);
+  assert.strictEqual(message.match(/\bError: error\b/g).length, 1);
+
+  console.error.restore();
 };
 
 Object.keys(tests).forEach(function(key) {
