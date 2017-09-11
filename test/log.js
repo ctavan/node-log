@@ -68,6 +68,20 @@ tests['Error should only be rendered once'] = function() {
   console.error.restore();
 };
 
+tests['Placeholders should be counted correctly'] = function() {
+  sinon.spy(console, 'error');
+
+  log.error('Placeholders: %s %%s %t', 'allowed', new Error('forbidden'));
+  var call = console.error.getCall(0);
+  var message = util.format.apply(null, call.args);
+
+  assert.notStrictEqual(message.indexOf('allowed'), -1);
+
+  assert.strictEqual(message.match(/Error: forbidden/g).length, 1);
+
+  console.error.restore();
+};
+
 Object.keys(tests).forEach(function(key) {
   console.log('Test: %s', key);
   tests[key]();

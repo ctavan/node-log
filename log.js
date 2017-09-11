@@ -11,8 +11,11 @@ const logLevels = ['fatal', 'error', 'warn', 'info', 'debug'];
 const logStack = getenv.bool('LOG_STACK', true);
 function forward(target, prefix) {
   return (format, ...args_) => {
-    const placeholders =
-      isString(format) ? (format.match(/%[sdifjoO]/g) || []).length : 0;
+    const placeholders = isString(format) ?
+      (format.match(/%[sdifjoO%]/g) || [])
+        .filter((placeholder) => placeholder !== '%%')
+        .length :
+      0;
     const args = args_.slice(0, placeholders);
 
     const errors = (logStack ? args_ : [])
