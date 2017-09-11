@@ -22,7 +22,8 @@ function forward(target, prefix) {
       .filter(isError)
       .map((error) => util.inspect(error, false, 3));
 
-    console[target]('%s', util.format(prefix + format, ...args) +
+    const rest = args_.slice(placeholders).filter((value) => !isError(value));
+    console[target]('%s', util.format(prefix + format, ...args, ...rest) +
                           ['', ...errors].join('\n'));
   };
 }

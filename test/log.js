@@ -82,6 +82,18 @@ tests['Placeholders should be counted correctly'] = function() {
   console.error.restore();
 };
 
+tests['Non-errors should be passed to util.format()'] = function() {
+  sinon.spy(console, 'error');
+
+  log.error('Placeholders: %s', 'placeholder', 'value');
+  var call = console.error.getCall(0);
+  var message = util.format.apply(null, call.args);
+
+  assert.strictEqual(message, 'ERROR: Placeholders: placeholder value');
+
+  console.error.restore();
+};
+
 Object.keys(tests).forEach(function(key) {
   console.log('Test: %s', key);
   tests[key]();
