@@ -12,7 +12,7 @@ const logStack = getenv.bool('LOG_STACK', true);
 function forward(target, prefix) {
   return (format, ...args_) => {
     const placeholders =
-      isString(format) ? (format.match(/%[sdifj]/g) || []).length : 0;
+      isString(format) ? (format.match(/%[sdifjoO]/g) || []).length : 0;
     const args = args_.slice(0, placeholders);
 
     const errors = (logStack ? args_ : [])
